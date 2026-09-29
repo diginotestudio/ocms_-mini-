@@ -49,6 +49,21 @@ public class OCMSMini {
 
     static int nextId = 1;
     
+//Menambahkan method selection input
+    static int inputAngka() {
+    while (true) {
+        try {
+            int angka = scanner.nextInt();
+            scanner.nextLine();
+            return angka;
+        } catch (java.util.InputMismatchException e) {
+            System.out.println("\nInput harus berupa angka.");
+            scanner.nextLine();
+            System.out.print("Coba lagi: ");
+            
+        }
+    }
+}
     public static void main(String[] args) {  
         
 //Menambah calling method opsiStatus        
@@ -68,8 +83,8 @@ public class OCMSMini {
         System.out.println("3. Keluar ");
         
         System.out.print("Pilih status: ");
-            opsiStatus = scanner.nextInt();
-            scanner.nextLine();
+            opsiStatus = inputAngka();  //ganti value dengan rule method
+
         System.out.println("\n");
             
 // menambah switch pilihan role/status user;
@@ -103,7 +118,7 @@ public class OCMSMini {
                     return;
                 } else {
                     System.out.println("Password salah.");
-                    System.out.println("Silakan coba lagi.");
+                    System.out.println("Silakan coba lagi.\n");
                 }
             }
         }
@@ -120,12 +135,11 @@ public class OCMSMini {
             System.out.println("4. Update Pengaduan");
             System.out.println("5. Statistik Pengaduan");
             System.out.println("6. Kembali ke menu utama");
-            System.out.println("7. Keluar");
+            System.out.println("7. Keluar\n");
 
             System.out.print("Pilih menu: ");
-            pilihan = scanner.nextInt();
-            scanner.nextLine(); 
-            
+            pilihan = inputAngka(); //ganti value dengan rule method
+                        
             System.out.println("\n");
             
             switch (pilihan) {
@@ -155,9 +169,8 @@ public class OCMSMini {
             System.out.println("3. Keluar");
 
             System.out.print("Pilih menu: ");
-            pilihan = scanner.nextInt();
-            scanner.nextLine(); 
-            
+            pilihan = inputAngka(); //ganti value dengan rule method
+                        
             System.out.print("\n");
             
             switch (pilihan) {
@@ -214,7 +227,10 @@ public class OCMSMini {
                 System.out.println("Status: " + complain.status);
                 
 //Menambahkan catatan (remark) pada status 'pending' dan 'ditolak'
-            if (complain.remark != null) {
+//Menambah filter remark untuk selain dipending dan ditolak
+            if (complain.remark != null 
+                    && (complain.status.equals("Pending")
+                    || complain.status.equals("Ditolak"))) {
                 System.out.println("Catatan: " + complain.remark);
                 }
                 System.out.println("-------------------------");
@@ -227,9 +243,8 @@ public class OCMSMini {
         System.out.println("\n");
         System.out.println("===== Cari Pengaduan =====");
         System.out.print("Masukkan ID pengaduan: ");
-        int id = scanner.nextInt();
-        scanner.nextLine(); 
-
+        int id = inputAngka();  //ganti value dengan rule method
+       
         boolean found = false;
         for (Complain complain : complains) {
             if (complain.id == id) {
@@ -240,8 +255,11 @@ public class OCMSMini {
                 System.out.println("Kategori: " + complain.kategori);
                 System.out.println("Status: " + complain.status);
                 
-//Menambahkan catatan (remark) pada status 'pending' dan 'ditolak' 
-            if (complain.remark != null) {
+//Menambahkan catatan (remark) pada status 'pending' dan 'ditolak'
+//Menambah filter remark untuk selain dipending dan ditolak
+            if (complain.remark != null
+                    && (complain.status.equals("Pending")
+                    || complain.status.equals("Ditolak"))) {
                 System.out.println("Catatan: " + complain.remark);
                 }
                 System.out.println("\n\n");
@@ -259,9 +277,9 @@ public class OCMSMini {
         System.out.println("\n");
         System.out.println("===== Update Pengaduan =====");
         System.out.print("Masukkan ID pengaduan yang ingin diupdate: ");
-        int id = scanner.nextInt();
+        int id = inputAngka();
         int statusBaru;
-        scanner.nextLine(); 
+ 
             System.out.print("\n");
             
         boolean found = false;
@@ -272,11 +290,10 @@ public class OCMSMini {
                 System.out.println("2. Diproses");
                 System.out.println("3. Selesai");
                 System.out.println("4. Pending");
-                System.out.println("5. Ditolak");
+                System.out.println("5. Ditolak \n");
                 System.out.print("Pilih status baru : ");
-                statusBaru  = scanner.nextInt();
-                scanner.nextLine(); 
-                
+                statusBaru  = inputAngka();
+                                
 //Menambahkan case 'pending'
                 switch(statusBaru) {
                     case 1:
@@ -299,7 +316,7 @@ public class OCMSMini {
                         return;
                 }
  //Menambahkan logic remark untuk case 'pending' dan 'ditolak               
-                if (statusBaru == 4|| statusBaru ==5) {
+                if (statusBaru == 4|| statusBaru == 5) {
                     System.out.println("Tuliskan alasan : ");
                 complain.remark  = scanner.nextLine();
                 }
@@ -346,5 +363,4 @@ public class OCMSMini {
         System.out.println("\n");
     }
 }
-
 
